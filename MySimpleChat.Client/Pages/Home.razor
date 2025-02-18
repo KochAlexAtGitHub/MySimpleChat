@@ -1,7 +1,91 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+@inject Services.ChatService ChatService
 
-<h1>Hello, world!</h1>
+@* <input @bind="messageText" placeholder="Nachricht eingeben..."/>
+<button @onclick=SendMessage>Senden</button> *@
 
-Welcome to your new app.
+@* <MudText Typo="Typo.h6">Nachricht eingeben...</MudText> *@
+
+
+
+<MudAppBar Color="Color.Primary" Fixed="false">
+    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
+    <MudSpacer />
+    <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" />
+</MudAppBar>
+
+<MudGrid Spacing="0">
+    <MudItem md="3" sm="12">
+        <MudList T="string">
+            <MudListItem>
+                <AvatarContent>
+                    <MudAvatar>OK</MudAvatar>
+                </AvatarContent>
+                <ChildContent>Photos</ChildContent>
+            </MudListItem>
+            <MudListItem>
+                <AvatarContent>
+                    <MudAvatar>
+                        <MudIcon Icon="@Icons.Material.Filled.Work" Color="Color.Primary" />
+                    </MudAvatar>
+                </AvatarContent>
+                <ChildContent>
+                    Work
+                </ChildContent>
+            </MudListItem>
+            <MudListItem>
+                <AvatarContent>
+                    <MudAvatar Color="Color.Tertiary">V</MudAvatar>
+                </AvatarContent>
+                <ChildContent>
+                    Vacation
+                </ChildContent>
+            </MudListItem>
+        </MudList>
+    </MudItem>
+    <MudItem md="3" sm="12">
+        <MudChat ChatPosition="ChatBubblePosition.Start">
+            <MudAvatar>OK</MudAvatar>
+            <MudChatBubble>
+                It's over Anakin
+            </MudChatBubble>
+            <MudChatBubble>
+                I have the high ground
+            </MudChatBubble>
+        </MudChat>
+        <MudChat ChatPosition="ChatBubblePosition.End">
+            <MudChatBubble>
+                You underestimate my power!
+            </MudChatBubble>
+        </MudChat>
+    </MudItem>
+</MudGrid>
+
+
+<MudTextField @bind-Value="TextValue" Label="Standard" Variant="Variant.Text"></MudTextField>
+
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@SendMessage">Senden</MudButton>
+
+<MudDivider></MudDivider>
+
+
+
+@* <MudDivider></MudDivider> *@
+
+
+
+@code {
+    private string messageText = "";
+    public string TextValue { get; set; } = "test";
+
+    private async Task SendMessage()
+    {
+        if (!string.IsNullOrWhiteSpace(messageText))
+        {
+            await ChatService.ConnectAsync();
+            await ChatService.SendMessage(messageText);
+            messageText = "";
+        }
+    }
+}
