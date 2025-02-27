@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySimpleChat.Client", "MySimpleChat.Client\MySimpleChat.Client.csproj", "{DCDA946A-338C-4270-89A6-3AEE1F0FB8CB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{985AAC94-0A36-41EF-8577-7A35E8BABE14} = {985AAC94-0A36-41EF-8577-7A35E8BABE14}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySimpleChat.Server", "MySimpleChat.Server\MySimpleChat.Server.csproj", "{985AAC94-0A36-41EF-8577-7A35E8BABE14}"
 EndProject

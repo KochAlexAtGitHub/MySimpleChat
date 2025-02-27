@@ -14,7 +14,7 @@ public class ChatService
 
     public async Task ConnectAsync()
     {
-        _hubConnection = new HubConnectionBuilder().WithUrl("https://meinserver.com/chathub").Build();
+        _hubConnection = new HubConnectionBuilder().WithUrl("https://localhost:5001/chathub").WithAutomaticReconnect().Build();
 
         _hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
         {

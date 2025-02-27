@@ -1,6 +1,8 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.SignalR.Client
 
 @inject Services.ChatService ChatService
+@* @inject HubConnection HubConnection *@
 
 @* <input @bind="messageText" placeholder="Nachricht eingeben..."/>
 <button @onclick=SendMessage>Senden</button> *@
@@ -72,11 +74,21 @@
 
 
 @* <MudDivider></MudDivider> *@
+<button @onclick="ConnectToChat">Verbinden</button>
+
+@if (isConnected)
+{
+    <p>✅ Verbunden mit SignalR!</p>
+}
+else
+{
+    <p>❌ Nicht verbunden</p>
+}
 
 
 
 @code {
-    private string messageText = "";
+    private string messageText = "test";
     public string TextValue { get; set; } = "test";
 
     private async Task SendMessage()
@@ -85,7 +97,18 @@
         {
             await ChatService.ConnectAsync();
             await ChatService.SendMessage(messageText);
-            messageText = "";
+            //messageText = "";
         }
+    }
+
+    private bool isConnected = false;
+
+    private async Task ConnectToChat()
+    {
+        // if (HubConnection.State == HubConnectionState.Disconnected)
+        // {
+        //     await HubConnection.StartAsync();
+        //     isConnected = HubConnection.State == HubConnectionState.Connected;
+        // }
     }
 }
